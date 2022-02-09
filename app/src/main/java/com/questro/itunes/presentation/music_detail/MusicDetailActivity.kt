@@ -1,9 +1,12 @@
 package com.questro.itunes.presentation.music_detail
 
+import android.content.Intent
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
@@ -12,6 +15,12 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.questro.itunes.R
+import android.text.style.UnderlineSpan
+
+import android.text.SpannableString
+
+
+
 
 class MusicDetailActivity : AppCompatActivity() {
 
@@ -72,9 +81,12 @@ class MusicDetailActivity : AppCompatActivity() {
                 })
                 .into(imgTrack)
 
-            val artistName: String? = intent.extras!!.getString("artistName")
-            val trackName: String? = intent.extras!!.getString("trackName")
-            val collectionName: String? = intent.extras!!.getString("collectionName")
+            val artistName = SpannableString(intent.extras!!.getString("artistName"))
+            artistName.setSpan(UnderlineSpan(), 0, artistName.length, 0)
+            val trackName = SpannableString(intent.extras!!.getString("trackName"))
+            trackName.setSpan(UnderlineSpan(), 0, trackName.length, 0)
+            val collectionName = SpannableString(intent.extras!!.getString("collectionName"))
+            collectionName.setSpan(UnderlineSpan(), 0, collectionName.length, 0)
             val trackTime = "Track Time: ${intent.extras!!.getString("trackTime")}"
             val trackPrice = "Track Price: ${intent.extras!!.getString("trackPrice")}"
             val releaseDate = "Release Date: ${intent.extras!!.getString("releaseDate")}"
@@ -89,6 +101,18 @@ class MusicDetailActivity : AppCompatActivity() {
             tvReleaseDate.text = releaseDate
             tvGenre.text = genre
             tvTrackExplicitness.text = trackExplicitness
+
+            tvArtistName.setOnClickListener {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(intent.extras!!.getString("artistViewUrl"))))
+            }
+
+            tvTrackName.setOnClickListener{
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(intent.extras!!.getString("trackViewUrl"))))
+            }
+
+            tvCollectionName.setOnClickListener{
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(intent.extras!!.getString("collectionViewUrl"))))
+            }
 
         }
     }

@@ -103,6 +103,9 @@ class MusicListAdapter(private val context: Context): RecyclerView.Adapter<Music
                 .putExtra("releaseDate",strDate)
                 .putExtra("genre",music.primaryGenreName)
                 .putExtra("trackExplicitness",music.trackExplicitness)
+                .putExtra("artistViewUrl",music.artistViewUrl)
+                .putExtra("collectionViewUrl",music.collectionViewUrl)
+                .putExtra("trackViewUrl",music.trackViewUrl)
             context.startActivity(intent)
         }
     }
